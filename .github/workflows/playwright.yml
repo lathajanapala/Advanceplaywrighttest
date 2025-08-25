@@ -1,0 +1,34 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CI: true
+  # dynamic username per run (keeps sign-ups unique)
+  DEMOBLAZE_USER: ci-${{ github.run_id }}
+  # password pulled from encrypted secret
+  DEMOBLAZE_PASS: ${{ secrets.DEMOBLAZE_PASS }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npx playwright test --reporter=github
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
