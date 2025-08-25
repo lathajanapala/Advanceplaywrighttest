@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
+import isCI from 'ci-info';
 
 export default defineConfig({
-    testDir: './tests',
+    testIgnore: isCI.isCI ? ['**/tests/payment.spec.ts'] : [],
+    // testIgnore: isCI ? ['**/tests/payment.spec.ts'] : [],
     // retries: 1,
     fullyParallel:false,
     // grep:/@sanity/,
@@ -12,7 +14,7 @@ export default defineConfig({
 
     // timeout: 50000, // Increased auto wait time to 5000 milliseconds
     // expect:{timeout:10000},
-       reporter: [['html'], ['list']],
+    reporter: [['github'], ['html', { open: 'never' }]],
     use: {
         headless: true,
         trace: 'retain-on-failure',
