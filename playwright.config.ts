@@ -14,7 +14,7 @@ export default defineConfig({
     // expect:{timeout:10000},
        reporter: [['html'], ['list']],
     use: {
-        headless: false,
+        headless: true,
         trace: 'retain-on-failure',
         screenshot: 'only-on-failure',
         // video: 'retain-on-failure', // Take video on failure
