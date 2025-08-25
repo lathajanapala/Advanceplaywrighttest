@@ -3,9 +3,14 @@ name: Playwright Tests
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'testdata/**'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - 'testdata/**'
   workflow_dispatch:
+
 
 env:
   CI: true
