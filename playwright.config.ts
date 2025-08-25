@@ -1,8 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
-import isCI from 'ci-info';
+
+const isCI = process.env.CI === 'true';
 
 export default defineConfig({
-    testIgnore: isCI.isCI ? ['**/tests/payment.spec.ts'] : [],
+
     // testIgnore: isCI ? ['**/tests/payment.spec.ts'] : [],
     // retries: 1,
     fullyParallel:false,
